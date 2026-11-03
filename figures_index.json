@@ -1,0 +1,494 @@
+{
+  "project": "Day-ahead forecasting of French electricity demand",
+  "generated": "2026-10-21",
+  "root": "C:\\Users\\marouane.housni\\OneDrive - VINCI Construction\\Bureau\\Mastere Data & Ai for Finance\\Time series\\Time-Series-Project",
+  "presentation_plan": "reports/presentation/PRESENTATION_PLAN.md",
+  "notebooks": [
+    {
+      "file": "notebooks/00_data_cleaning_regional.ipynb",
+      "summary": "Load+clean national & 12-region hourly data, impute DST gaps, reconcile regions->national, save processed CSVs."
+    },
+    {
+      "file": "notebooks/01_exploration_cleaning.ipynb",
+      "summary": "EDA + statistics: seasonality, ADF/KPSS, ACF/PACF, temperature link, RTE benchmark audit, naive baselines, split."
+    },
+    {
+      "file": "notebooks/02_models_benchmarking.ipynb",
+      "summary": "Classical ARIMA day-ahead: normal+anomaly, recursive ARIMA(1,0,0) & lag-window ARIMA(3,0,2), vs RTE."
+    },
+    {
+      "file": "notebooks/03_ml_forecasting.ipynb",
+      "summary": "Tree ML, global regional bottom-up: DT/RF/XGB/LightGBM; feature importance; local vs global; LightGBM beats RTE ~23%."
+    },
+    {
+      "file": "notebooks/04_deep_learning_uncertainty.ipynb",
+      "summary": "Global PyTorch MLP + forecasts-with-uncertainty (quantile vs split-conformal intervals, coverage by hour)."
+    }
+  ],
+  "figures": [
+    {
+      "file": "00_reconciliation.png",
+      "path": "reports/figures/00_reconciliation.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Sum of the 12 regional loads vs the national total — validates reconciliation to ~0.03%."
+    },
+    {
+      "file": "00_region_climate.png",
+      "path": "reports/figures/00_region_climate.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Regions grouped/coloured by climate (temperature regime)."
+    },
+    {
+      "file": "00_region_daily_shape.png",
+      "path": "reports/figures/00_region_daily_shape.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Each region's average daily load shape (normalised) — compares profile shapes."
+    },
+    {
+      "file": "00_region_monthly_shape.png",
+      "path": "reports/figures/00_region_monthly_shape.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Each region's monthly/seasonal load shape."
+    },
+    {
+      "file": "00_region_peakiness.png",
+      "path": "reports/figures/00_region_peakiness.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Regional peakiness (peak-to-mean) comparison."
+    },
+    {
+      "file": "00_region_size.png",
+      "path": "reports/figures/00_region_size.png",
+      "notebook": "00_data_cleaning_regional",
+      "description": "Average load size per region (which regions are biggest)."
+    },
+    {
+      "file": "02_overview.png",
+      "path": "reports/figures/02_overview.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "National demand 2019-2026 as a daily mean — the series at a glance."
+    },
+    {
+      "file": "03_distribution.png",
+      "path": "reports/figures/03_distribution.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Distribution of hourly load — right-skewed with a cold-evening-peak upper tail."
+    },
+    {
+      "file": "04_daily_profile.png",
+      "path": "reports/figures/04_daily_profile.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Average daily load profile — morning ramp and ~19h winter evening peak."
+    },
+    {
+      "file": "05_weekday_weekend.png",
+      "path": "reports/figures/05_weekday_weekend.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Weekday vs weekend daily load profiles (weekends several GW lower)."
+    },
+    {
+      "file": "06_hour_month_heatmap.png",
+      "path": "reports/figures/06_hour_month_heatmap.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Mean load by hour-of-day x month — winter-evening peak, summer-night trough."
+    },
+    {
+      "file": "07_stl.png",
+      "path": "reports/figures/07_stl.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "STL decomposition of load into trend / seasonal / remainder."
+    },
+    {
+      "file": "08_acf.png",
+      "path": "reports/figures/08_acf.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "ACF of the seasonal (lag-24) difference — spikes at 24/48/168 h."
+    },
+    {
+      "file": "08_pacf.png",
+      "path": "reports/figures/08_pacf.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "PACF of the seasonal difference — cuts off after low-order/seasonal lags."
+    },
+    {
+      "file": "09_load_vs_temp.png",
+      "path": "reports/figures/09_load_vs_temp.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Load vs temperature V-shape (hockey stick) and the degree-day transform."
+    },
+    {
+      "file": "10_rte_error_breakdown.png",
+      "path": "reports/figures/10_rte_error_breakdown.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "RTE forecast error by hour and temperature — worst on evening peaks / cold snaps."
+    },
+    {
+      "file": "11_split_timeline.png",
+      "path": "reports/figures/11_split_timeline.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Chronological train (2019-23) / validation (2024) / test (2025-26) timeline."
+    },
+    {
+      "file": "12_baselines.png",
+      "path": "reports/figures/12_baselines.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Naive seasonal baselines (daily/weekly/cascade) vs RTE — MAE bars."
+    },
+    {
+      "file": "13_forecast_vs_actual_weeks.png",
+      "path": "reports/figures/13_forecast_vs_actual_weeks.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "RTE and naive-daily tracking actual load over a winter and a summer week."
+    },
+    {
+      "file": "14_forecast_vs_actual_scatter.png",
+      "path": "reports/figures/14_forecast_vs_actual_scatter.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Predicted vs actual scatter (RTE tight to diagonal, naive wider)."
+    },
+    {
+      "file": "15_daily_temperature.png",
+      "path": "reports/figures/15_daily_temperature.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Daily mean temperature annual cycle with 30-day average."
+    },
+    {
+      "file": "16_regional_variation.png",
+      "path": "reports/figures/16_regional_variation.png",
+      "notebook": "01_exploration_cleaning",
+      "description": "Each region's daily profile indexed to its own mean — spread around the national shape."
+    },
+    {
+      "file": "20_normal_anomaly.png",
+      "path": "reports/figures/20_normal_anomaly.png",
+      "notebook": "02_models_benchmarking",
+      "description": "Seasonal normal profile (season x weekday x hour) and the resulting anomaly series."
+    },
+    {
+      "file": "21_anomaly_acf_pacf.png",
+      "path": "reports/figures/21_anomaly_acf_pacf.png",
+      "notebook": "02_models_benchmarking",
+      "description": "ACF/PACF of the anomaly used to identify ARIMA (p,q) orders."
+    },
+    {
+      "file": "22_grid_search.png",
+      "path": "reports/figures/22_grid_search.png",
+      "notebook": "02_models_benchmarking",
+      "description": "LEGACY single ARIMA (p,q) validation-MAE grid; superseded by 22_model_tuning_comparison.png."
+    },
+    {
+      "file": "22_model_tuning_comparison.png",
+      "path": "reports/figures/22_model_tuning_comparison.png",
+      "notebook": "02_models_benchmarking",
+      "description": "(p,q) validation-MAE grids for both the recursive ARIMA and the lag-window ARIMA."
+    },
+    {
+      "file": "23_per_horizon.png",
+      "path": "reports/figures/23_per_horizon.png",
+      "notebook": "02_models_benchmarking",
+      "description": "Test MAE by target hour: recursive ARIMA, lag-window ARIMA, raw hybrid, RTE."
+    },
+    {
+      "file": "24_example_days.png",
+      "path": "reports/figures/24_example_days.png",
+      "notebook": "02_models_benchmarking",
+      "description": "Day-ahead ARIMA forecasts vs actual load on example days."
+    },
+    {
+      "file": "25_residuals.png",
+      "path": "reports/figures/25_residuals.png",
+      "notebook": "02_models_benchmarking",
+      "description": "Chosen ARIMA residual diagnostics (residual ACF + histogram)."
+    },
+    {
+      "file": "30_ml_benchmark.png",
+      "path": "reports/figures/30_ml_benchmark.png",
+      "notebook": "03_ml_forecasting",
+      "description": "National day-ahead MAE: bottom-up ML models (DT/RF/XGB/LightGBM) vs RTE."
+    },
+    {
+      "file": "31_importance.png",
+      "path": "reports/figures/31_importance.png",
+      "notebook": "03_ml_forecasting",
+      "description": "LightGBM top-15 feature importances (split count)."
+    },
+    {
+      "file": "32_national_forecast.png",
+      "path": "reports/figures/32_national_forecast.png",
+      "notebook": "03_ml_forecasting",
+      "description": "Bottom-up LightGBM national forecast vs actual vs RTE, winter and summer weeks."
+    },
+    {
+      "file": "33_local_vs_global.png",
+      "path": "reports/figures/33_local_vs_global.png",
+      "notebook": "03_ml_forecasting",
+      "description": "Per-region MAE (local vs global) and the national bottom-up MAE vs RTE."
+    },
+    {
+      "file": "34_feature_influence_local_global.png",
+      "path": "reports/figures/34_feature_influence_local_global.png",
+      "notebook": "03_ml_forecasting",
+      "description": "Global vs mean-local gain importance, plus a region x feature local-gain heatmap."
+    },
+    {
+      "file": "35_region_forecasts.png",
+      "path": "reports/figures/35_region_forecasts.png",
+      "notebook": "03_ml_forecasting",
+      "description": "Per-region day-ahead forecasts (actual/global/local), winter week — 12 small multiples."
+    },
+    {
+      "file": "36_region_error_comparison.png",
+      "path": "reports/figures/36_region_error_comparison.png",
+      "notebook": "03_ml_forecasting",
+      "description": "Per-region error: absolute MAE (MW) and size-adjusted MAPE (%), global vs local."
+    },
+    {
+      "file": "37_overall_comparison.png",
+      "path": "reports/figures/37_overall_comparison.png",
+      "notebook": "03_ml_forecasting",
+      "description": "SUMMARY: every approach's national MAE relative to RTE (each on its own test window)."
+    },
+    {
+      "file": "40_deep_benchmark.png",
+      "path": "reports/figures/40_deep_benchmark.png",
+      "notebook": "04_deep_learning_uncertainty",
+      "description": "Global PyTorch MLP vs LightGBM vs RTE — national MAE."
+    },
+    {
+      "file": "41_quantile_interval.png",
+      "path": "reports/figures/41_quantile_interval.png",
+      "notebook": "04_deep_learning_uncertainty",
+      "description": "80% day-ahead prediction interval (quantile / conformal) over an example period."
+    },
+    {
+      "file": "42_coverage_by_hour.png",
+      "path": "reports/figures/42_coverage_by_hour.png",
+      "notebook": "04_deep_learning_uncertainty",
+      "description": "Interval coverage by hour of day — dips in the afternoon/evening peak."
+    },
+    {
+      "file": "43_coverage_season_temperature.png",
+      "path": "reports/figures/43_coverage_season_temperature.png",
+      "notebook": "?",
+      "description": "80% conformal interval coverage by season and by temperature band vs the 80% target / 75% fail line — fails in winter and below 8C, over-covers in summer."
+    },
+    {
+      "file": "44_trust_vs_rte_season_temperature.png",
+      "path": "reports/figures/44_trust_vs_rte_season_temperature.png",
+      "notebook": "?",
+      "description": "Best model (LightGBM) vs RTE point MAE by season and temperature — we beat RTE in every season and in cool/mild/warm, but RTE wins on cold days (<8C); shows where to trust the model vs fall back to RTE."
+    }
+  ],
+  "presentation_images": [
+    {
+      "file": "s04_demand_overview.png",
+      "path": "reports/presentation/images/s04_demand_overview.png",
+      "slide": "1,4",
+      "source_figure": "02_overview.png",
+      "description": "National demand, 2019-2026 (daily mean)."
+    },
+    {
+      "file": "s05_regional_reconciliation.png",
+      "path": "reports/presentation/images/s05_regional_reconciliation.png",
+      "slide": "5",
+      "source_figure": "00_reconciliation.png",
+      "description": "Regions reconcile to the national total."
+    },
+    {
+      "file": "s06_seasonality_heatmap.png",
+      "path": "reports/presentation/images/s06_seasonality_heatmap.png",
+      "slide": "6",
+      "source_figure": "06_hour_month_heatmap.png",
+      "description": "Demand by hour x month."
+    },
+    {
+      "file": "s06b_daily_profile.png",
+      "path": "reports/presentation/images/s06b_daily_profile.png",
+      "slide": "6",
+      "source_figure": "04_daily_profile.png",
+      "description": "Average daily load profile."
+    },
+    {
+      "file": "s07_acf.png",
+      "path": "reports/presentation/images/s07_acf.png",
+      "slide": "7",
+      "source_figure": "08_acf.png",
+      "description": "Autocorrelation (ACF) with 24/168 h spikes."
+    },
+    {
+      "file": "s07b_stl_decomposition.png",
+      "path": "reports/presentation/images/s07b_stl_decomposition.png",
+      "slide": "7",
+      "source_figure": "07_stl.png",
+      "description": "STL decomposition."
+    },
+    {
+      "file": "s08_load_vs_temperature.png",
+      "path": "reports/presentation/images/s08_load_vs_temperature.png",
+      "slide": "8",
+      "source_figure": "09_load_vs_temp.png",
+      "description": "Load vs temperature (hockey stick)."
+    },
+    {
+      "file": "s09_regional_variation.png",
+      "path": "reports/presentation/images/s09_regional_variation.png",
+      "slide": "9",
+      "source_figure": "16_regional_variation.png",
+      "description": "Regional daily-profile variation."
+    },
+    {
+      "file": "s10_rte_error_breakdown.png",
+      "path": "reports/presentation/images/s10_rte_error_breakdown.png",
+      "slide": "10",
+      "source_figure": "10_rte_error_breakdown.png",
+      "description": "Where RTE's error concentrates."
+    },
+    {
+      "file": "s11_naive_baselines.png",
+      "path": "reports/presentation/images/s11_naive_baselines.png",
+      "slide": "11",
+      "source_figure": "12_baselines.png",
+      "description": "Naive baselines vs RTE."
+    },
+    {
+      "file": "s11b_forecast_vs_actual_weeks.png",
+      "path": "reports/presentation/images/s11b_forecast_vs_actual_weeks.png",
+      "slide": "11",
+      "source_figure": "13_forecast_vs_actual_weeks.png",
+      "description": "RTE vs naive, example weeks."
+    },
+    {
+      "file": "s12_train_val_test_split.png",
+      "path": "reports/presentation/images/s12_train_val_test_split.png",
+      "slide": "12",
+      "source_figure": "11_split_timeline.png",
+      "description": "Train / validation / test timeline."
+    },
+    {
+      "file": "s13_normal_anomaly.png",
+      "path": "reports/presentation/images/s13_normal_anomaly.png",
+      "slide": "13",
+      "source_figure": "20_normal_anomaly.png",
+      "description": "Seasonal normal + anomaly."
+    },
+    {
+      "file": "s14_anomaly_acf_pacf.png",
+      "path": "reports/presentation/images/s14_anomaly_acf_pacf.png",
+      "slide": "14",
+      "source_figure": "21_anomaly_acf_pacf.png",
+      "description": "Anomaly ACF / PACF (order ID)."
+    },
+    {
+      "file": "s14b_arima_pq_tuning.png",
+      "path": "reports/presentation/images/s14b_arima_pq_tuning.png",
+      "slide": "14",
+      "source_figure": "22_model_tuning_comparison.png",
+      "description": "ARIMA (p,q) validation grids."
+    },
+    {
+      "file": "s15_arima_mae_by_hour.png",
+      "path": "reports/presentation/images/s15_arima_mae_by_hour.png",
+      "slide": "15",
+      "source_figure": "23_per_horizon.png",
+      "description": "ARIMA MAE by target hour."
+    },
+    {
+      "file": "s15b_arima_example_days.png",
+      "path": "reports/presentation/images/s15b_arima_example_days.png",
+      "slide": "15",
+      "source_figure": "24_example_days.png",
+      "description": "ARIMA forecasts vs actual."
+    },
+    {
+      "file": "s18_ml_national_benchmark.png",
+      "path": "reports/presentation/images/s18_ml_national_benchmark.png",
+      "slide": "18",
+      "source_figure": "30_ml_benchmark.png",
+      "description": "National MAE: ML models vs RTE."
+    },
+    {
+      "file": "s18b_ml_national_forecast.png",
+      "path": "reports/presentation/images/s18b_ml_national_forecast.png",
+      "slide": "18",
+      "source_figure": "32_national_forecast.png",
+      "description": "LightGBM national forecast, example weeks."
+    },
+    {
+      "file": "s19_ml_feature_importance.png",
+      "path": "reports/presentation/images/s19_ml_feature_importance.png",
+      "slide": "19",
+      "source_figure": "31_importance.png",
+      "description": "LightGBM feature importance."
+    },
+    {
+      "file": "s20_local_vs_global.png",
+      "path": "reports/presentation/images/s20_local_vs_global.png",
+      "slide": "20",
+      "source_figure": "33_local_vs_global.png",
+      "description": "Local vs global: per-region & national MAE."
+    },
+    {
+      "file": "s20b_feature_influence_local_global.png",
+      "path": "reports/presentation/images/s20b_feature_influence_local_global.png",
+      "slide": "20",
+      "source_figure": "34_feature_influence_local_global.png",
+      "description": "Feature influence: global vs local."
+    },
+    {
+      "file": "s21_region_forecasts.png",
+      "path": "reports/presentation/images/s21_region_forecasts.png",
+      "slide": "21",
+      "source_figure": "35_region_forecasts.png",
+      "description": "Per-region forecasts, winter week."
+    },
+    {
+      "file": "s21b_region_error_comparison.png",
+      "path": "reports/presentation/images/s21b_region_error_comparison.png",
+      "slide": "21",
+      "source_figure": "36_region_error_comparison.png",
+      "description": "Per-region error: MAE vs MAPE."
+    },
+    {
+      "file": "s22_deep_benchmark.png",
+      "path": "reports/presentation/images/s22_deep_benchmark.png",
+      "slide": "22",
+      "source_figure": "40_deep_benchmark.png",
+      "description": "Deep MLP vs trees vs RTE."
+    },
+    {
+      "file": "s23_uncertainty_interval.png",
+      "path": "reports/presentation/images/s23_uncertainty_interval.png",
+      "slide": "23",
+      "source_figure": "41_quantile_interval.png",
+      "description": "80% prediction interval."
+    },
+    {
+      "file": "s24_coverage_by_hour.png",
+      "path": "reports/presentation/images/s24_coverage_by_hour.png",
+      "slide": "24",
+      "source_figure": "42_coverage_by_hour.png",
+      "description": "Interval coverage by hour."
+    },
+    {
+      "file": "s24b_coverage_season_temperature.png",
+      "path": "reports/presentation/images/s24b_coverage_season_temperature.png",
+      "slide": "24",
+      "source_figure": "43_coverage_season_temperature.png",
+      "description": "80% interval coverage by season & temperature — where it fails."
+    },
+    {
+      "file": "s25_overall_comparison.png",
+      "path": "reports/presentation/images/s25_overall_comparison.png",
+      "slide": "25",
+      "source_figure": "37_overall_comparison.png",
+      "description": "Every approach vs RTE."
+    },
+    {
+      "file": "s25b_trust_vs_rte_season_temperature.png",
+      "path": "reports/presentation/images/s25b_trust_vs_rte_season_temperature.png",
+      "slide": "26",
+      "source_figure": "44_trust_vs_rte_season_temperature.png",
+      "description": "Where to trust the best model vs RTE — by season & temperature."
+    }
+  ]
+}
